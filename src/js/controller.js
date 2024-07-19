@@ -1,4 +1,3 @@
-import { async } from "regenerator-runtime";
 import * as model from "./model";
 import { TIMEOUT_CLOSE_WINDOW } from "./config.js";
 import recipeView from "./views/recipeView.js";
@@ -10,10 +9,7 @@ import addRecipeView from "./views/addRecipeView.js";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-
-// if (module.hot) {
-//   module.hot.accept();
-// }
+import { async } from "regenerator-runtime";
 
 async function controlRecipe() {
   try {

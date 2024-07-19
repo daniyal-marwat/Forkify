@@ -1,3 +1,4 @@
+import { async } from "regenerator-runtime";
 import { TIMEOUT_SECONDS } from "./config.js";
 function timeout(seconds) {
   return new Promise((_, reject) => {
