@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forkify</title>
+    <link
+      rel="shortcut icon"
+      href="./src/img/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script defer type="module" src="/src/js/controller.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navigator">
+        <img class="nav-logo" src="./src/img/favicon.png" alt="Logo" />
+        <form class="search_container">
+          <input
+            class="search__input"
+            type="text"
+            placeholder="Search over 1,000,000 recipes..."
+          />
+          <button class="search__btn">
+            <svg class="icon search-icon">
+              <use href="./src/img/icons.svg#icon-search"></use>
+            </svg>
+            <span>search</span>
+          </button>
+        </form>
+        <div class="nav_btn-container nav_btn-container-modal">
+          <svg class="icon">
+            <use href="./src/img/icons.svg#icon-edit"></use>
+          </svg>
+          <span>add recipe</span>
+        </div>
+        <div class="nav_btn-container nav_btn-container-bookmark">
+          <svg class="icon">
+            <use href="./src/img/icons.svg#icon-bookmark"></use>
+            <span>bookmark</span>
+          </svg>
+        </div>
+        <div class="bookmarks">
+          <ul class="bookmark__list">
+            <div class="main__message">
+              <svg class="icon">
+                <use href="./src/img/icons.svg#icon-smile"></use>
+              </svg>
+              <p>No bookmark add yet!. Choose a nice food and bookmark it.</p>
+            </div>
+            <!-- <li class="preview">
+              <a class="preview__link" href="#">
+                <figure class="preview__figure">
+                  <img
+                    class="bookmark__list-img"
+                    src="http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg"
+                    alt="Cauliflower Pizza Crust (with BBQ Chicken Pizza)"
+                  />
+                </figure>
+                <div class="preview__data">
+                  <h4 class="preview__title">
+                    CAULIFLOWER PIZZA CRUST (WITH BBQ CHICKEN PIZZA)
+                  </h4>
+                  <p class="preview__publisher">CLOSET COOKING</p>
+                </div>
+                <div class="preview__user-generated hidden">
+                  <svg class="icon">
+                    <use href="./src/img/icons.svg#icon-user"></use>
+                  </svg>
+                </div>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+      </nav>
+      <aside class="aside result">
+        <ul class="result_list">
+          <!-- <li class="preview">
+            <a class="preview__link" href="#">
+              <figure class="preview__figure">
+                <img
+                  src="http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg"
+                  alt="Cauliflower Pizza Crust (with BBQ Chicken Pizza)"
+                />
+              </figure>
+              <div class="preview__data">
+                <h4 class="preview__title">
+                  CAULIFLOWER PIZZA CRUST (WITH BBQ CHICKEN PIZZA)
+                </h4>
+                <p class="preview__publisher">CLOSET COOKING</p>
+              </div>
+              <div class="preview__user-generated hidden">
+                <svg class="icon">
+                  <use href="/img/icons.svg#icon-user"></use>
+                </svg>
+              </div>
+            </a>
+          </li> -->
+        </ul>
+        <div class="pagination">
+          <!-- <button class="btn pagination_btn pagination_btn-previous">
+            &larr; Page <span>1</span>
+          </button>
+          <button class="btn pagination_btn pagination_btn-next">
+            Page <span>2</span> &rarr;
+          </button> -->
+        </div>
+      </aside>
+      <main class="main recipe">
+        <div class="main__message">
+          <svg class="icon">
+            <use href="./src/img/icons.svg#icon-smile"></use>
+          </svg>
+          <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+        </div>
+        <!-- <div class="error main__message">
+          <svg class="icon">
+            <use href="./src/img/icons.svg#icon-alert-triangle"></use>
+          </svg>
+          <p>Couldnot find recipe</p>
+        </div> -->
+        <!-- <div class="spinner">
+          <svg>
+            <use href="src./src/img/icons.svg#icon-loader"></use>
+          </svg>
+        </div> -->
+        <!-- <figure class="recipe_figure">
+          <img
+            src="http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg"
+            alt="Cauliflower Pizza Crust (with BBQ Chicken Pizza)"
+          />
+          <h1 class="recipe__title">
+            <span>CAULIFLOWER PIZZA CRUST (WITH BBQ CHICKEN PIZZA)</span>
+          </h1>
+        </figure>
+        <div class="recipe__details">
+          <div class="recipe__info">
+            <svg class="icon recipe__details-icon">
+              <use href="/img/icons.svg#icon-clock"></use>
+            </svg>
+            <span class="recipe__info-data recipe__info-data--minutes">75</span>
+            <span class="recipe__info-text">minutes</span>
+          </div>
+          <div class="recipe__info">
+            <svg class="icon recipe__details-icon">
+              <use href="/img/icons.svg#icon-users"></use>
+            </svg>
+            <span class="recipe__info-data recipe__info-data--people">4</span>
+            <span class="recipe__info-text">servings</span>
+            <div class="recipe__info-buttons">
+              <button class="btn btn--update-servings">
+                <svg class="icon">
+                  <use href="/img/icons.svg#icon-minus-circle"></use>
+                </svg>
+              </button>
+              <button class="btn btn--update-servings">
+                <svg class="icon">
+                  <use href="/img/icons.svg#icon-plus-circle"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="recipe__user-generated">
+            <svg class="icon">
+              <use href="/img/icons.svg#icon-user"></use>
+            </svg>
+          </div>
+          <button class="btn btn--bookmark">
+            <svg class="icon">
+              <use href="/img/icons.svg#icon-bookmark"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="recipe__ingredients">
+          <h2 class="heading--2">RECIPE INGREDIENTS</h2>
+          <ul class="recipe__ingredients-list">
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity">1</span>
+              <span class="recipe__description"
+                >medium head cauliflower cut into florets</span
+              >
+            </li>
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity">1</span>
+              <span class="recipe__description">egg</span>
+            </li>
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity">1/2</span>
+              <span class="recipe__description">cup mozzarella shredded</span>
+            </li>
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity">1</span>
+              <span class="recipe__description">
+                tsp oregano or italian seasoning blend</span
+              >
+            </li>
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity"></span>
+              <span class="recipe__description"> Salt and pepper to taste</span>
+            </li>
+            <li class="recipe__ingredient">
+              <svg class="icon">
+                <use href="/img/icons.svg#icon-check"></use>
+              </svg>
+              <span class="recipe__quantity">1</span>
+              <span class="recipe__description">
+                cup chicken cooked and shredded</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="recipe__direction">
+          <h2 class="heading--2">how to cook it</h2>
+          <p class="recipe__direction-text">
+            This recipe was carefully designed and tested by Closet Cooking.
+            Please check out directions at their website.
+          </p>
+          <a href="#" class="btn btn--direction">
+            <span>Direction</span>
+            <svg class="icon">
+              <use href="/img/icons.svg#icon-arrow-right"></use>
+            </svg>
+          </a>
+        </div> -->
+      </main>
+      <div class="footer">
+        © Copyright by <a href="#">Jonas Schmedtmann.</a> Use for learning or
+        your portfolio. Don't use to teach. Don't claim as your own.
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+    <div class="add-recipe-window hidden">
+      <button class="btn--close-modal">&times;</button>
+      <form class="upload">
+        <div class="upload__column">
+          <h3 class="upload__heading">Recipe data</h3>
+          <label>Title</label>
+          <input value="TEST123" required name="title" type="text" />
+          <label>URL</label>
+          <input value="TEST123" required name="sourceUrl" type="text" />
+          <label>Image URL</label>
+          <input value="TEST123" required name="image" type="text" />
+          <label>Publisher</label>
+          <input value="TEST123" required name="publisher" type="text" />
+          <label>Prep time</label>
+          <input value="23" required name="cookingTime" type="number" />
+          <label>Servings</label>
+          <input value="23" required name="servings" type="number" />
+        </div>
+
+        <div class="upload__column">
+          <h3 class="upload__heading">Ingredients</h3>
+          <label>Ingredient 1</label>
+          <input
+            value="0.5,kg,Rice"
+            type="text"
+            required
+            name="ingredient-1"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+          <label>Ingredient 2</label>
+          <input
+            value="1,,Avocado"
+            type="text"
+            name="ingredient-2"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+          <label>Ingredient 3</label>
+          <input
+            value=",,salt"
+            type="text"
+            name="ingredient-3"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+          <label>Ingredient 4</label>
+          <input
+            type="text"
+            name="ingredient-4"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+          <label>Ingredient 5</label>
+          <input
+            type="text"
+            name="ingredient-5"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+          <label>Ingredient 6</label>
+          <input
+            type="text"
+            name="ingredient-6"
+            placeholder="Format: 'Quantity,Unit,Description'"
+          />
+        </div>
+
+        <button class="upload__btn">
+          <svg>
+            <use href="./src/img/icons.svg#icon-upload-cloud"></use>
+          </svg>
+          <span>Upload</span>
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
