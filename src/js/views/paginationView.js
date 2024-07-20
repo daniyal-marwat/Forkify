@@ -11,25 +11,28 @@ class PaginationView extends View {
       handler(gotoPage);
     });
   }
+  _calcTotalNumOfPage() {
+    return Math.ceil(this._data.results.length / this._data.resPerPage);
+  }
 
   _generateMarkup() {
     const currPage = this._data.page;
-    const totalNumPages = Math.ceil(
-      this._data.results.length / this._data.resPerPage
-    );
     // When there is page1 and other
 
-    if (currPage === 1 && totalNumPages > 1) {
+    if (currPage === 1 && this._calcTotalNumOfPage() > 1) {
       return this._generateMarkupBtnNext(currPage);
     }
     // When there is only last page
 
-    if (currPage === totalNumPages && totalNumPages > 1) {
+    if (
+      currPage === this._calcTotalNumOfPage() &&
+      this._calcTotalNumOfPage() > 1
+    ) {
       return this._generateMarkupBtnPrev(currPage);
     }
     // Other page
 
-    if (currPage < totalNumPages) {
+    if (currPage < this._calcTotalNumOfPage()) {
       return `${this._generateMarkupBtnPrev(
         currPage
       )}${this._generateMarkupBtnNext(currPage)}`;
@@ -47,13 +50,13 @@ class PaginationView extends View {
   }
   _generateMarkupBtnNext(currPage) {
     // ALSO DISPLAY TOTAL NUMBER OF PAGES
-    const totalNumPages = Math.ceil(
-      this._data.results.length / this._data.resPerPage
-    );
+
     return `<button data-goto="${
       currPage + 1
     }" class="btn pagination_btn pagination_btn-next">
-            Page <span> ${currPage + 1}(${totalNumPages})</span> &rarr;
+            Page <span> ${
+              currPage + 1
+            }(${this._calcTotalNumOfPage()})</span> &rarr;
           </button>`;
   }
 }
