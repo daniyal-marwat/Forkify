@@ -5,8 +5,8 @@ class PaginationView extends View {
   addHandlerPagination(handler) {
     this._parentEl.addEventListener("click", function (e) {
       const btn = e.target.closest(".pagination_btn");
-      const gotoPage = +btn.dataset.goto;
       if (!btn) return;
+      const gotoPage = +btn.dataset.goto;
 
       handler(gotoPage);
     });
@@ -46,10 +46,14 @@ class PaginationView extends View {
           </button>`;
   }
   _generateMarkupBtnNext(currPage) {
+    // ALSO DISPLAY TOTAL NUMBER OF PAGES
+    const totalNumPages = Math.ceil(
+      this._data.results.length / this._data.resPerPage
+    );
     return `<button data-goto="${
       currPage + 1
     }" class="btn pagination_btn pagination_btn-next">
-            Page <span> ${currPage + 1}</span> &rarr;
+            Page <span> ${currPage + 1}(${totalNumPages})</span> &rarr;
           </button>`;
   }
 }
