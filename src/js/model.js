@@ -70,6 +70,25 @@ export function getSearchResultsPerPage(page = state.search.page) {
   return state.search.results.slice(start, end);
 }
 
+// NOT WORKING CAUSE A LOT OF API REQUEST !! TIMEOUT!!
+
+// export async function sortResult() {
+//   try {
+//     // ASSIGN STATE.SEARCH.SORTRESULTS AND THIS SORT THE STATE.SEARCH.RESULT BY COOKING TIME.
+
+//     // Mapping each async operation to a promise
+//     const promises = state.search.results.map(async (result) => {
+//       const req = await AJAX(`${API_URL}${result.id}`);
+//       return req.data.recipe; // Assuming req.data.recipe is the desired data to return
+//     });
+//     state.search.sortResults = await Promise.all(promises);
+//     state.search.sortResults.sort((a, b) => a.cooking_time - b.cooking_time);
+//     console.log(state);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
 export function updateServings(newServings) {
   state.recipe.ingredients.forEach((ing) => {
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;

@@ -57,6 +57,10 @@ async function controlSearchResults() {
 
     await model.loadSearchResults(query);
 
+    // SORT THE RESULT BY COOKING TIME
+
+    // await model.sortResult();
+
     // RENDERING RESULTS
 
     resultView.render(model.getSearchResultsPerPage());
