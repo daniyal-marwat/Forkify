@@ -9,10 +9,13 @@ class AddRecipeView extends View {
   _overlay = document.querySelector(".overlay");
   _showModal = document.querySelector(".nav_btn-container-modal");
   _closeModal = document.querySelector(".btn--close-modal");
+  _btnAddIngredients = document.querySelector(".add-ingredients_btn");
+  _ingredientsColumn = document.querySelector(".upload__column-ingredients");
   constructor() {
     super();
     this.addHandlerShowModal();
     this.addHandlerCloseModal();
+    this.addIngredients();
   }
   toggleWindow() {
     this._overlay.classList.toggle("hidden");
@@ -32,6 +35,24 @@ class AddRecipeView extends View {
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
+  }
+  addIngredients() {
+    let ingredients = 4;
+
+    this._btnAddIngredients.addEventListener(
+      "click",
+      function () {
+        const html = `          <label>Ingredient ${ingredients}</label>
+        <input
+          value=""
+          type="text"
+          name="ingredient-${ingredients}"
+          placeholder="Format: 'Quantity,Unit,Description'"
+/>`;
+        this._ingredientsColumn.insertAdjacentHTML("beforeend", html);
+        ingredients++;
+      }.bind(this)
+    );
   }
 }
 

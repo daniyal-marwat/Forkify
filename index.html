@@ -272,7 +272,7 @@
           <input value="23" required name="servings" type="number" />
         </div>
 
-        <div class="upload__column">
+        <div class="upload__column upload__column-ingredients">
           <h3 class="upload__heading">Ingredients</h3>
           <label>Ingredient 1</label>
           <input
@@ -296,26 +296,10 @@
             name="ingredient-3"
             placeholder="Format: 'Quantity,Unit,Description'"
           />
-          <label>Ingredient 4</label>
-          <input
-            type="text"
-            name="ingredient-4"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
-          <label>Ingredient 5</label>
-          <input
-            type="text"
-            name="ingredient-5"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
-          <label>Ingredient 6</label>
-          <input
-            type="text"
-            name="ingredient-6"
-            placeholder="Format: 'Quantity,Unit,Description'"
-          />
         </div>
-
+        <button type="button" class="add-ingredients_btn upload__btn">
+          ADD INGREDIENTS
+        </button>
         <button class="upload__btn">
           <svg>
             <use href="./src/img/icons.svg#icon-upload-cloud"></use>
