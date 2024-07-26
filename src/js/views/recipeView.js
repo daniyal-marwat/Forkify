@@ -63,6 +63,9 @@ class RecipeView extends View {
     }"></use>
             </svg>
           </button>
+                    <button class="btn--shopping-cart">
+            ADD INGREDIENTS TO SHOPPING LIST
+          </button>
         </div>
         <div class="recipe__ingredients">
           <h2 class="heading--2">RECIPE INGREDIENTS</h2>

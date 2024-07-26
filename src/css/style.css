@@ -36,7 +36,7 @@ body {
 /* *************************** */
 nav {
   display: grid;
-  grid-template-columns: 200px 1fr 150px 150px;
+  grid-template-columns: 200px 1fr 150px 150px 150px;
   align-items: center;
   justify-content: center;
   background-color: #f9f5f3;
@@ -110,12 +110,14 @@ nav img {
   width: fit-content;
   margin-left: 1rem;
   height: 100%;
+  position: relative;
 }
 /* .nav_btn-container-bookmark {
   position: relative;
 } */
 /* Bookmarks */
-.bookmarks {
+.bookmarks,
+.shopping-cart {
   padding: 1rem 0;
   position: absolute;
   overflow-x: hidden;
@@ -131,7 +133,8 @@ nav img {
   height: 35rem;
   overflow-y: scroll;
 }
-.bookmark__list {
+.bookmark__list,
+.shopping-cart-list {
   list-style: none;
 }
 /* Effects */
@@ -147,6 +150,11 @@ nav img {
 }
 .bookmarks:hover,
 .nav_btn-container-bookmark:hover + .bookmarks {
+  visibility: visible;
+  opacity: 1;
+}
+.shopping-cart:hover,
+.nav_btn-container-shopping-cart:hover + .shopping-cart {
   visibility: visible;
   opacity: 1;
 }
@@ -351,6 +359,10 @@ nav img {
   background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
   transition: transform 0.2s;
   align-self: flex-end;
+}
+.btn--shopping-cart {
+  width: 23%;
+  border-radius: 1rem;
 }
 .btn--bookmark svg {
   fill: #fff;

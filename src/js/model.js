@@ -143,6 +143,9 @@ export async function uploadRecipe(newRecipe) {
     throw error;
   }
 }
+function clearBookmarks() {
+  localStorage.removeItem("bookmarks");
+}
 function init() {
   const storage = localStorage.getItem("bookmarks");
   if (storage) {
