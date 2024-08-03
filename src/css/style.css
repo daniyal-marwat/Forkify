@@ -110,7 +110,6 @@ nav img {
   width: fit-content;
   margin-left: 1rem;
   height: 100%;
-  position: relative;
 }
 /* .nav_btn-container-bookmark {
   position: relative;
@@ -136,6 +135,43 @@ nav img {
 .bookmark__list,
 .shopping-cart-list {
   list-style: none;
+}
+/* Shopping List */
+.shopping-cart-list-item {
+  position: relative;
+  font-size: 1.3rem;
+  display: flex;
+  gap: 2rem;
+  padding: 0rem 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.shopping-cart-list-item_input-container {
+  display: flex;
+  border: 1px solid #eee;
+  width: 20%;
+  padding: 0.5rem;
+}
+.shopping-cart-list-item_input-container input {
+  border: none;
+  width: 100%;
+}
+.btn--remove-shopping-item {
+  color: #fff;
+  cursor: pointer;
+  background-color: #f38e82;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  padding: 0.5rem;
+  border-radius: 50%;
 }
 /* Effects */
 .search_container:focus-within {
@@ -363,6 +399,8 @@ nav img {
 .btn--shopping-cart {
   width: 23%;
   border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 .btn--bookmark svg {
   fill: #fff;
@@ -409,6 +447,9 @@ nav img {
 /* Effects */
 .btn--bookmark:hover {
   transform: scale(1.1);
+}
+.btn--shopping-cart:hover {
+  transform: scale(1.05);
 }
 
 /* ***************************************************** */

@@ -115,9 +115,12 @@ class RecipeView extends View {
                 <span class="recipe__quantity">${
                   ing.quantity ? new Fraction(ing.quantity).toString() : ""
                 }</span>
-                <span class="recipe__description recipe__unit">
-                  ${ing.unit}
-                </span>
+                ${
+                  ing.unit
+                    ? `<span class="recipe__description recipe__unit">${ing.unit}</span>`
+                    : ""
+                }
+
                 <span class="recipe__description">${ing.description}</span>
               </li>`;
   }

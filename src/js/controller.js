@@ -6,6 +6,7 @@ import resultView from "./views/resultView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarkView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
+import shoppingListView from "./views/shoppingListView.js";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -151,7 +152,9 @@ async function controlAddRecipe(newRecipe) {
     console.error(error);
   }
 }
-
+async function controlShoppingList() {
+  shoppingListView.render(model.state.recipe);
+}
 function init() {
   bookmarkView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
@@ -160,5 +163,6 @@ function init() {
   searchView.addHandlerResults(controlSearchResults);
   paginationView.addHandlerPagination(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  shoppingListView.addHandlerShoppingList(controlShoppingList);
 }
 init();
