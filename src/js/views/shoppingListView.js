@@ -2,10 +2,11 @@ import View from "./View.js";
 class ShoppingListView extends View {
   _parentEl = document.querySelector(".shopping-cart-list");
   _button = document.querySelector(".recipe");
+  _errorMessage = "No ingredients at shopping list yet!";
   _generateMarkup(data) {
-    return data.ingredients
-      .map((ing) => {
-        return `<li class="shopping-cart-list-item">
+    return data
+      .map((ing, i) => {
+        return `<li class="shopping-cart-list-item" data-index="${i}">
               ${
                 ing.quantity || ing.unit
                   ? `              <div class="shopping-cart-list-item_input-container">
@@ -26,11 +27,21 @@ class ShoppingListView extends View {
       .join(" ");
   }
   addHandlerShoppingList(handler) {
-    this._button.addEventListener("click", function (e) {
-      const btn = e.target.closest(".btn--shopping-cart");
+    window.addEventListener("load", handler);
+  }
+  addHandlerRemoveIngredient(handler) {
+    this._parentEl.addEventListener("click", function (e) {
+      const btn = e.target.closest(".btn--remove-shopping-item");
       if (!btn) return;
-      console.log("clicked");
-      handler();
+      const deleteIndex = btn.closest("li").dataset.index;
+      handler(deleteIndex);
+    });
+  }
+  addHandlerUpdateShoppingList(handler) {
+    this._parentEl.addEventListener("change", function (e) {
+      const changedIndex = e.target.closest("li").dataset.index;
+      const changedValue = +e.target.value;
+      handler(changedIndex, changedValue);
     });
   }
 }

@@ -397,10 +397,12 @@ nav img {
   align-self: flex-end;
 }
 .btn--shopping-cart {
-  width: 23%;
+  width: 100%;
   border-radius: 1rem;
   cursor: pointer;
   transition: transform 0.2s;
+  margin-bottom: 1rem;
+  font-weight: 500 !important;
 }
 .btn--bookmark svg {
   fill: #fff;

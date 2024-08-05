@@ -152,8 +152,21 @@ async function controlAddRecipe(newRecipe) {
     console.error(error);
   }
 }
-async function controlShoppingList() {
-  shoppingListView.render(model.state.recipe);
+function controlAddShoppingList() {
+  // ADD INGREDIENTS OF RECIPE TO SHOPPING LIST IN MODEL.STATE
+  model.addIngredientsToShoppingList();
+  shoppingListView.render(model.state.shoppingList);
+}
+function controlRemoveShoppingListIngredient(index) {
+  model.removeIngredientsFromShoppingList(index);
+  shoppingListView.render(model.state.shoppingList);
+}
+
+function controlShoppingList() {
+  shoppingListView.render(model.state.shoppingList);
+}
+function controlUpdateShoppingList(index, changedValue) {
+  model.updateShoppingList(index, changedValue);
 }
 function init() {
   bookmarkView.addHandlerRender(controlBookmarks);
@@ -163,6 +176,11 @@ function init() {
   searchView.addHandlerResults(controlSearchResults);
   paginationView.addHandlerPagination(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  recipeView.addHandlerShoppingList(controlAddShoppingList);
   shoppingListView.addHandlerShoppingList(controlShoppingList);
+  shoppingListView.addHandlerRemoveIngredient(
+    controlRemoveShoppingListIngredient
+  );
+  shoppingListView.addHandlerUpdateShoppingList(controlUpdateShoppingList);
 }
 init();

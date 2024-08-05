@@ -12,6 +12,7 @@ export const state = {
     resPerPage: RES_PER_PAGE,
   },
   bookmarks: [],
+  shoppingList: [],
 };
 function createRecipeObject(data) {
   let { recipe } = data.data;
@@ -146,10 +147,34 @@ export async function uploadRecipe(newRecipe) {
 function clearBookmarks() {
   localStorage.removeItem("bookmarks");
 }
+export function addIngredientsToShoppingList() {
+  state.shoppingList.push(...state.recipe.ingredients);
+  presistShoppingList();
+}
+
+export function removeIngredientsFromShoppingList(index) {
+  state.shoppingList.splice(index, 1);
+  presistShoppingList();
+}
+export function updateShoppingList(index, changedValue) {
+  state.shoppingList[index].quantity = changedValue;
+  presistShoppingList();
+}
+function presistShoppingList() {
+  localStorage.setItem("shoppingList", JSON.stringify(state.shoppingList));
+}
+function clearShoppingList() {
+  localStorage.removeItem("shoppingList");
+}
+
 function init() {
   const storage = localStorage.getItem("bookmarks");
   if (storage) {
     state.bookmarks = JSON.parse(storage);
+  }
+  const shoppingListStorage = localStorage.getItem("shoppingList");
+  if (shoppingListStorage) {
+    state.shoppingList = JSON.parse(shoppingListStorage);
   }
 }
 init();

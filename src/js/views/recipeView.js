@@ -63,9 +63,6 @@ class RecipeView extends View {
     }"></use>
             </svg>
           </button>
-                    <button class="btn--shopping-cart">
-            ADD INGREDIENTS TO SHOPPING LIST
-          </button>
         </div>
         <div class="recipe__ingredients">
           <h2 class="heading--2">RECIPE INGREDIENTS</h2>
@@ -79,6 +76,9 @@ class RecipeView extends View {
             This recipe was carefully designed and tested by Closet Cooking.
             Please check out directions at their website.
           </p>
+          <button class="btn btn--direction btn--shopping-cart">
+            ADD INGREDIENTS TO SHOPPING LIST
+          </button>
           <a href="${recipe.sourceUrl}" class="btn btn--direction">
             <span>Direction</span>
             <svg class="icon">
@@ -103,6 +103,13 @@ class RecipeView extends View {
   addHandlerBookmark(handler) {
     this._parentEl.addEventListener("click", function (e) {
       const btn = e.target.closest(".btn--bookmark");
+      if (!btn) return;
+      handler();
+    });
+  }
+  addHandlerShoppingList(handler) {
+    this._parentEl.addEventListener("click", function (e) {
+      const btn = e.target.closest(".btn--shopping-cart");
       if (!btn) return;
       handler();
     });
