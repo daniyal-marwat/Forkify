@@ -576,6 +576,7 @@ nav img {
   height: 2.4rem;
   width: 2.4rem;
   fill: #f38e82;
+  color: #f38e82;
   transform: translateY(-1px);
 }
 .hidden {

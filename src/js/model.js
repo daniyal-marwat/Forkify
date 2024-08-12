@@ -1,5 +1,5 @@
 import { async } from "regenerator-runtime";
-import { API_URL, RES_PER_PAGE, KEY } from "./config.js";
+import { API_URL, RES_PER_PAGE, KEY, SPOONACULAR_API_KEY } from "./config.js";
 // import { getJSON, sendJSON } from "./helper.js";
 import { AJAX } from "./helper.js";
 
@@ -33,7 +33,8 @@ export const loadRecipe = async function (id) {
     const url = `${API_URL}${id}?key=${KEY}`;
     const data = await AJAX(url);
     state.recipe = createRecipeObject(data);
-
+    await getCaloriesOfIngredients(state.recipe.ingredients);
+    // testCalories();
     if (state.bookmarks.some((bookmark) => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
@@ -167,6 +168,41 @@ function clearShoppingList() {
   localStorage.removeItem("shoppingList");
 }
 
+async function getCaloriesOfIngredients(ingredients) {
+  try {
+    const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
+    let totalCalories = 0;
+    const UpData = new URLSearchParams({
+      ingredientList: ingredients
+        .map(
+          (ingredient) =>
+            `${ingredient.quantity ? ingredient.quantity : ""} ${
+              ingredient.unit ? ingredient.unit : ""
+            } ${ingredient.description}`
+        )
+        .join("\n"),
+      servings: 1,
+    });
+    const data = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: UpData,
+    });
+    const data2 = await data.json();
+    data2.forEach((ingredient) => {
+      const calories = ingredient.nutrition.nutrients.find(
+        (nutrient) => nutrient.name === "Calories"
+      ).amount;
+      totalCalories += calories;
+    });
+    state.recipe.totalCalories = totalCalories;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 function init() {
   const storage = localStorage.getItem("bookmarks");
   if (storage) {
