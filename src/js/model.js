@@ -34,7 +34,6 @@ export const loadRecipe = async function (id) {
     const data = await AJAX(url);
     state.recipe = createRecipeObject(data);
     await getCaloriesOfIngredients(state.recipe.ingredients);
-    // testCalories();
     if (state.bookmarks.some((bookmark) => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
