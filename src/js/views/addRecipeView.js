@@ -16,6 +16,7 @@ class AddRecipeView extends View {
     this.addHandlerShowModal();
     this.addHandlerCloseModal();
     this.addIngredients();
+    this.validIngredientInput();
   }
   toggleWindow() {
     this._overlay.classList.toggle("hidden");
@@ -53,6 +54,20 @@ class AddRecipeView extends View {
         ingredients++;
       }.bind(this)
     );
+  }
+  validIngredientInput() {
+    this._ingredientsColumn.addEventListener("input", function (e) {
+      const inputField = e.target.closest("input");
+      const text = e.target.closest("input").value;
+      const textArr = text.split(",");
+      if (textArr.length !== 3) {
+        inputField.style.backgroundColor = "#f03e3e";
+        inputField.style.color = "#fff";
+      } else {
+        inputField.style.backgroundColor = "white";
+        inputField.style.color = "#000";
+      }
+    });
   }
 }
 
