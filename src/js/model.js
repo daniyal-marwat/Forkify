@@ -33,7 +33,6 @@ export const loadRecipe = async function (id) {
     const url = `${API_URL}${id}?key=${KEY}`;
     const data = await AJAX(url);
     state.recipe = createRecipeObject(data);
-    await getCaloriesOfIngredients(state.recipe.ingredients);
     if (state.bookmarks.some((bookmark) => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
@@ -167,7 +166,7 @@ function clearShoppingList() {
   localStorage.removeItem("shoppingList");
 }
 
-async function getCaloriesOfIngredients(ingredients) {
+export async function getCaloriesOfIngredients(ingredients) {
   try {
     const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
     let totalCalories = 0;

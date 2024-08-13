@@ -32,6 +32,10 @@ async function controlRecipe() {
 
     await model.loadRecipe(id);
 
+    // GET CALORIES
+
+    await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
+
     //RENDERING DATA
 
     recipeView.render(model.state.recipe);
@@ -84,10 +88,14 @@ function controlPagination(gotoPage) {
   paginationView.render(model.state.search);
 }
 
-function controlUpdateServings(newServings) {
+async function controlUpdateServings(newServings) {
   //UPDATE SERVINGS
 
   model.updateServings(newServings);
+
+  // UPDATE CALOREIS
+
+  await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
 
   //RENDER NEW SERVINGS
 
