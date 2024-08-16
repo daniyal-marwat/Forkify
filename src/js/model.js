@@ -179,7 +179,6 @@ export async function getCaloriesOfIngredients(ingredients) {
             } ${ingredient.description}`
         )
         .join("\n"),
-      servings: 1,
     });
     const data = await fetch(url, {
       method: "POST",
@@ -190,10 +189,12 @@ export async function getCaloriesOfIngredients(ingredients) {
     });
     const data2 = await data.json();
     data2.forEach((ingredient) => {
-      const calories = ingredient.nutrition.nutrients.find(
-        (nutrient) => nutrient.name === "Calories"
-      ).amount;
-      totalCalories += calories;
+      if (ingredient.nutrition) {
+        const calories = ingredient.nutrition.nutrients.find(
+          (nutrient) => nutrient.name === "Calories"
+        ).amount;
+        totalCalories += calories;
+      }
     });
     state.recipe.totalCalories = totalCalories;
   } catch (error) {
