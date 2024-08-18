@@ -21,9 +21,40 @@
   <body>
     <div class="container">
       <nav class="navigator">
-        <a href="/">
+        <a class="nav-logo_a" href="/">
           <img class="nav-logo" src="./src/img/favicon.png" alt="Logo" />
         </a>
+        <div class="nav-calender">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="icon_calender"
+          >
+            <path
+              d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm.002 16H5V8h14l.002 12z"
+            ></path>
+            <path
+              d="m11 17.414 5.707-5.707-1.414-1.414L11 14.586l-2.293-2.293-1.414 1.414z"
+            ></path>
+          </svg>
+        </div>
+        <div class="weekly-calender">
+          <ul class="weekly-calender-list">
+            <li class="weekly-calender-list-item">
+              <span
+                >Monday:<a href="#id"
+                  >CAULIFLOWER PIZZA CRUST (WITH BBQ CHICKEN PIZZA)</a
+                ></span
+              >
+            </li>
+            <li class="weekly-calender-list-item">
+              <span>Tuesday:<a>Jamaican Burgers </a></span>
+            </li>
+            <li class="weekly-calender-list-item">
+              <span>Wednesday:<a>Sausage Pasta </a></span>
+            </li>
+          </ul>
+        </div>
         <form class="search_container">
           <input
             class="search__input"
@@ -167,12 +198,12 @@
         </div>
       </aside>
       <main class="main recipe">
-        <div class="main__message">
+        <!-- <div class="main__message">
           <svg class="icon">
             <use href="./src/img/icons.svg#icon-smile"></use>
           </svg>
           <p>Start by searching for a recipe or an ingredient. Have fun!</p>
-        </div>
+        </div> -->
         <!-- <div class="error main__message">
           <svg class="icon">
             <use href="./src/img/icons.svg#icon-alert-triangle"></use>
@@ -257,6 +288,27 @@
             <svg class="icon">
               <use href="src/img/icons.svg#icon-bookmark"></use>
             </svg>
+          </button>
+          <button class="btn btn--calendar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 15h3v3h2v-3h3v-2h-3v-3h-2v3H8z"></path>
+              <path
+                d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm.002 16H5V8h14l.002 12z"
+              ></path>
+            </svg>
+            <div class="btn--calendar_drop_down-menu hidden">
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </div>
           </button>
         </div>
         <div class="recipe__ingredients">

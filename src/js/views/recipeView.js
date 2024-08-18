@@ -91,6 +91,27 @@ class RecipeView extends View {
     }"></use>
             </svg>
           </button>
+                    <button class="btn btn--calendar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 15h3v3h2v-3h3v-2h-3v-3h-2v3H8z"></path>
+              <path
+                d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm.002 16H5V8h14l.002 12z"
+              ></path>
+            </svg>
+            <div class="btn--calendar_drop_down-menu hidden">
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </div>
+          </button>
         </div>
         <div class="recipe__ingredients">
           <h2 class="heading--2">RECIPE INGREDIENTS</h2>
