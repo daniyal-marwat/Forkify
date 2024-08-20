@@ -3,7 +3,8 @@ import icons from "url:../../img/icons.svg";
 
 class BookmarkView extends View {
   _parentEl = document.querySelector(".bookmark__list");
-  _errorMessage = "No bookmark add yet!. Choose a nice food and bookmark it.";
+  _message = "No bookmark add yet!. Choose a nice food and bookmark it.";
+  _errorMessage = "Something went wrong!";
   _generateMarkup() {
     return this._data.map(this._generateMarkupPreview).join("");
   }

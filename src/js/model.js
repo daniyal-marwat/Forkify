@@ -13,6 +13,7 @@ export const state = {
   },
   bookmarks: [],
   shoppingList: [],
+  weeklyCalendar: [],
 };
 function createRecipeObject(data) {
   let { recipe } = data.data;
@@ -53,7 +54,9 @@ export const loadSearchResults = async function (query) {
         ...(res.key && { key: res.key }),
       };
     });
-
+    if (state.search.results.length === 0) {
+      state.search.results = null;
+    }
     // STARTING FROM PAGE ONE WHEN THERE IS NEW SEARCH QUERY
 
     state.search.page = 1;
@@ -67,7 +70,9 @@ export function getSearchResultsPerPage(page = state.search.page) {
   state.search.page = page;
   const start = (page - 1) * RES_PER_PAGE; //0
   const end = page * RES_PER_PAGE; //9
-  return state.search.results.slice(start, end);
+  if (state.search.results) {
+    return state.search.results.slice(start, end);
+  }
 }
 
 // NOT WORKING CAUSE A LOT OF API REQUEST !! TIMEOUT!!
@@ -166,50 +171,113 @@ function clearShoppingList() {
   localStorage.removeItem("shoppingList");
 }
 
-export async function getCaloriesOfIngredients(ingredients) {
-  try {
-    const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
-    let totalCalories = 0;
-    const UpData = new URLSearchParams({
-      ingredientList: ingredients
-        .map(
-          (ingredient) =>
-            `${ingredient.quantity ? ingredient.quantity : ""} ${
-              ingredient.unit ? ingredient.unit : ""
-            } ${ingredient.description}`
-        )
-        .join("\n"),
-    });
-    const data = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: UpData,
-    });
-    const data2 = await data.json();
-    data2.forEach((ingredient) => {
-      if (ingredient.nutrition) {
-        const calories = ingredient.nutrition.nutrients.find(
-          (nutrient) => nutrient.name === "Calories"
-        ).amount;
-        totalCalories += calories;
-      }
-    });
-    state.recipe.totalCalories = totalCalories;
-  } catch (error) {
-    console.error(error);
-    throw error;
+// export async function getCaloriesOfIngredients(ingredients) {
+//   try {
+//     const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
+//     let totalCalories = 0;
+//     const UpData = new URLSearchParams({
+//       ingredientList: ingredients
+//         .map(
+//           (ingredient) =>
+//             `${ingredient.quantity ? ingredient.quantity : ""} ${
+//               ingredient.unit ? ingredient.unit : ""
+//             } ${ingredient.description}`
+//         )
+//         .join("\n"),
+//     });
+//     const data = await fetch(url, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/x-www-form-urlencoded",
+//       },
+//       body: UpData,
+//     });
+//     const data2 = await data.json();
+//     data2.forEach((ingredient) => {
+//       if (ingredient.nutrition) {
+//         const calories = ingredient.nutrition.nutrients.find(
+//           (nutrient) => nutrient.name === "Calories"
+//         ).amount;
+//         totalCalories += calories;
+//       }
+//     });
+//     state.recipe.totalCalories = totalCalories;
+//   } catch (error) {
+//     console.error(error);
+//     throw error;
+//   }
+// }
+
+export function sortWeeklyCalendar() {
+  const weekdayOrder = {
+    Monday: 0,
+    Tuesday: 1,
+    Wednesday: 2,
+    Thursday: 3,
+    Friday: 4,
+    Saturday: 5,
+    Sunday: 6,
+  };
+  // sort weekly days in calendar in order
+  state.weeklyCalendar.sort((a, b) => {
+    return weekdayOrder[a[0]] - weekdayOrder[b[0]];
+  });
+}
+export function deletePrevDaysFromWeeklyCalendar() {
+  const dayNames = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  const getDayIndex = (dayName) => dayNames.indexOf(dayName);
+
+  const date = new Date();
+  const currentDayIndex = date.getDay() - 1;
+  const arr = state.weeklyCalendar.filter(
+    (el) => getDayIndex(el[0]) >= currentDayIndex
+  );
+
+  state.weeklyCalendar = arr;
+}
+export function storeWeeklyCalendar() {
+  // save to local storage
+  localStorage.setItem("weeklyCalendar", JSON.stringify(state.weeklyCalendar));
+}
+export function saveWeeklyCalendar(arr) {
+  let found = false;
+
+  // replace meal of existing day
+  state.weeklyCalendar.forEach((el) => {
+    if (el.includes(arr[0])) {
+      el[1] = arr[1];
+      el[2] = arr[2];
+      found = true;
+    }
+  });
+  if (!found) {
+    state.weeklyCalendar.push(arr);
   }
 }
+export function clearWeeklyCalendar() {
+  localStorage.removeItem("weeklyCalendar");
+}
+
 function init() {
-  const storage = localStorage.getItem("bookmarks");
-  if (storage) {
-    state.bookmarks = JSON.parse(storage);
+  const bookmarkStorage = localStorage.getItem("bookmarks");
+  if (bookmarkStorage) {
+    state.bookmarks = JSON.parse(bookmarkStorage);
   }
   const shoppingListStorage = localStorage.getItem("shoppingList");
   if (shoppingListStorage) {
     state.shoppingList = JSON.parse(shoppingListStorage);
+  }
+  const weeklyCalendarStorage = localStorage.getItem("weeklyCalendar");
+  if (weeklyCalendarStorage) {
+    state.weeklyCalendar = JSON.parse(weeklyCalendarStorage);
   }
 }
 init();

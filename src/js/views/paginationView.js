@@ -12,7 +12,9 @@ class PaginationView extends View {
     });
   }
   _calcTotalNumOfPage() {
-    return Math.ceil(this._data.results.length / this._data.resPerPage);
+    if (this._data.results) {
+      return Math.ceil(this._data.results.length / this._data.resPerPage);
+    }
   }
 
   _generateMarkup() {

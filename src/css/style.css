@@ -67,7 +67,7 @@ nav img {
   cursor: pointer;
 }
 .weekly-calender {
-  text-transform: uppercase;
+  z-index: 5;
   font-size: 1.5rem;
   position: absolute;
   top: 100px;
@@ -84,6 +84,9 @@ nav img {
   gap: 2rem;
   list-style: none;
   padding: 0.5rem;
+}
+.weekly-calender-list-item {
+  text-transform: uppercase;
 }
 .weekly-calender-list-item a {
   padding-left: 1rem;

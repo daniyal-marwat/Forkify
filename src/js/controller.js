@@ -7,7 +7,7 @@ import paginationView from "./views/paginationView.js";
 import bookmarkView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
 import shoppingListView from "./views/shoppingListView.js";
-
+import weeklyCalendarView from "./views/weeklyCalendarView.js";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { async } from "regenerator-runtime";
@@ -34,7 +34,7 @@ async function controlRecipe() {
 
     // GET CALORIES
 
-    await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
+    // await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
 
     //RENDERING DATA
 
@@ -176,6 +176,28 @@ function controlShoppingList() {
 function controlUpdateShoppingList(index, changedValue) {
   model.updateShoppingList(index, changedValue);
 }
+
+function controlCalender(calendarData) {
+  // save the data in state
+  model.saveWeeklyCalendar(calendarData);
+  // sort calendar
+  model.sortWeeklyCalendar();
+  // delete prev days from weekly calendar
+  model.deletePrevDaysFromWeeklyCalendar();
+  // store into local storage
+  model.storeWeeklyCalendar();
+  // render data on website
+  weeklyCalendarView.render(model.state.weeklyCalendar);
+}
+function controlRenderCalenderOnLoad() {
+  // delete prev days from weekly calendar
+  model.deletePrevDaysFromWeeklyCalendar();
+  // store into local storage
+  model.storeWeeklyCalendar();
+  // model.clearWeeklyCalendar();
+  // render data on website
+  weeklyCalendarView.render(model.state.weeklyCalendar);
+}
 function init() {
   bookmarkView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
@@ -190,5 +212,7 @@ function init() {
     controlRemoveShoppingListIngredient
   );
   shoppingListView.addHandlerUpdateShoppingList(controlUpdateShoppingList);
+  weeklyCalendarView.addHandlerRender(controlRenderCalenderOnLoad);
+  recipeView.addHandlerGetCalendarValue(controlCalender);
 }
 init();

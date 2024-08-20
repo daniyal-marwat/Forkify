@@ -2,7 +2,8 @@ import View from "./View.js";
 class ShoppingListView extends View {
   _parentEl = document.querySelector(".shopping-cart-list");
   _button = document.querySelector(".recipe");
-  _errorMessage = "No ingredients at shopping list yet!";
+  _message = "No ingredients at shopping list yet!";
+  _errorMessage = "Something went wrong";
   _generateMarkup(data) {
     return data
       .map((ing, i) => {

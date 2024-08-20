@@ -5,6 +5,10 @@ import View from "./View.js";
 class RecipeView extends View {
   _parentEl = document.querySelector(".recipe");
   _errorMessage = "We could not find that recipe. Please try another one!";
+  constructor() {
+    super();
+    this._toggleCalendarDropDownMenu();
+  }
 
   _generateMarkup(recipe) {
     return `<figure class="recipe_figure">
@@ -179,6 +183,22 @@ class RecipeView extends View {
 
                 <span class="recipe__description">${ing.description}</span>
               </li>`;
+  }
+  _toggleCalendarDropDownMenu() {
+    this._parentEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn--calendar");
+      if (!btn) return;
+      const dropDown = btn.querySelector(".btn--calendar_drop_down-menu");
+      dropDown.classList.toggle("hidden");
+    });
+  }
+  addHandlerGetCalendarValue(handler) {
+    this._parentEl.addEventListener("click", (e) => {
+      const node = e.target.closest(".btn--calendar_drop_down-menu option");
+      if (!node) return;
+      const arr = [node.value, this._data.title, this._data.id];
+      handler(arr);
+    });
   }
 }
 
