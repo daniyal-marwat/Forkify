@@ -171,42 +171,42 @@ function clearShoppingList() {
   localStorage.removeItem("shoppingList");
 }
 
-// export async function getCaloriesOfIngredients(ingredients) {
-//   try {
-//     const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
-//     let totalCalories = 0;
-//     const UpData = new URLSearchParams({
-//       ingredientList: ingredients
-//         .map(
-//           (ingredient) =>
-//             `${ingredient.quantity ? ingredient.quantity : ""} ${
-//               ingredient.unit ? ingredient.unit : ""
-//             } ${ingredient.description}`
-//         )
-//         .join("\n"),
-//     });
-//     const data = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/x-www-form-urlencoded",
-//       },
-//       body: UpData,
-//     });
-//     const data2 = await data.json();
-//     data2.forEach((ingredient) => {
-//       if (ingredient.nutrition) {
-//         const calories = ingredient.nutrition.nutrients.find(
-//           (nutrient) => nutrient.name === "Calories"
-//         ).amount;
-//         totalCalories += calories;
-//       }
-//     });
-//     state.recipe.totalCalories = totalCalories;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// }
+export async function getCaloriesOfIngredients(ingredients) {
+  try {
+    const url = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${SPOONACULAR_API_KEY}&includeNutrition=true`;
+    let totalCalories = 0;
+    const UpData = new URLSearchParams({
+      ingredientList: ingredients
+        .map(
+          (ingredient) =>
+            `${ingredient.quantity ? ingredient.quantity : ""} ${
+              ingredient.unit ? ingredient.unit : ""
+            } ${ingredient.description}`
+        )
+        .join("\n"),
+    });
+    const data = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: UpData,
+    });
+    const data2 = await data.json();
+    data2.forEach((ingredient) => {
+      if (ingredient.nutrition) {
+        const calories = ingredient.nutrition.nutrients.find(
+          (nutrient) => nutrient.name === "Calories"
+        ).amount;
+        totalCalories += calories;
+      }
+    });
+    state.recipe.totalCalories = totalCalories;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 export function sortWeeklyCalendar() {
   const weekdayOrder = {

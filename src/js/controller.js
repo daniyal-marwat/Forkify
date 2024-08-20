@@ -34,7 +34,7 @@ async function controlRecipe() {
 
     // GET CALORIES
 
-    // await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
+    await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
 
     //RENDERING DATA
 
