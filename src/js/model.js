@@ -14,6 +14,7 @@ export const state = {
   bookmarks: [],
   shoppingList: [],
   weeklyCalendar: [],
+  weekdaysLeft: [],
 };
 function createRecipeObject(data) {
   let { recipe } = data.data;
@@ -225,18 +226,26 @@ export function sortWeeklyCalendar() {
 }
 export function deletePrevDaysFromWeeklyCalendar() {
   const dayNames = [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
-  const getDayIndex = (dayName) => dayNames.indexOf(dayName);
-
-  const date = new Date();
-  const currentDayIndex = date.getDay() - 1;
+  const weekdayOrder = {
+    Monday: 0,
+    Tuesday: 1,
+    Wednesday: 2,
+    Thursday: 3,
+    Friday: 4,
+    Saturday: 5,
+    Sunday: 6,
+  };
+  const getDayIndex = (dayName) => weekdayOrder[dayName];
+  const currentDay = dayNames[new Date().getDay()];
+  const currentDayIndex = getDayIndex(currentDay);
   const arr = state.weeklyCalendar.filter(
     (el) => getDayIndex(el[0]) >= currentDayIndex
   );
@@ -265,7 +274,35 @@ export function saveWeeklyCalendar(arr) {
 export function clearWeeklyCalendar() {
   localStorage.removeItem("weeklyCalendar");
 }
+export function setWeekdaysLeft() {
+  const dayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const weekdayOrder = {
+    Monday: 0,
+    Tuesday: 1,
+    Wednesday: 2,
+    Thursday: 3,
+    Friday: 4,
+    Saturday: 5,
+    Sunday: 6,
+  };
+  const getDayIndex = (dayName) => weekdayOrder[dayName];
+  const currentDay = dayNames[new Date().getDay()];
+  const currentDayIndex = getDayIndex(currentDay);
 
+  const leftDays = dayNames.filter((el) => getDayIndex(el) >= currentDayIndex);
+  leftDays.sort((a, b) => {
+    return weekdayOrder[a] - weekdayOrder[b];
+  });
+  state.weekdaysLeft.push(...leftDays);
+}
 function init() {
   const bookmarkStorage = localStorage.getItem("bookmarks");
   if (bookmarkStorage) {

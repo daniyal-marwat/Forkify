@@ -38,7 +38,7 @@ async function controlRecipe() {
 
     //RENDERING DATA
 
-    recipeView.render(model.state.recipe);
+    recipeView.render(model.state);
   } catch (err) {
     // RENDERIN ERROR
 
@@ -99,7 +99,7 @@ async function controlUpdateServings(newServings) {
 
   //RENDER NEW SERVINGS
 
-  recipeView.update(model.state.recipe);
+  recipeView.update(model.state);
 }
 
 function controlAddBookmarks() {
@@ -110,7 +110,7 @@ function controlAddBookmarks() {
   else model.removeBookmark(model.state.recipe.id);
 
   // UPDATE THE BOOKMARK ICON
-  recipeView.update(model.state.recipe);
+  recipeView.update(model.state);
 
   // RENDER THE RESULTS IN BOOKMARK TAB
   bookmarkView.render(model.state.bookmarks);
@@ -132,7 +132,7 @@ async function controlAddRecipe(newRecipe) {
 
     // RENDER NEW RECIPE
 
-    recipeView.render(model.state.recipe);
+    recipeView.render(model.state);
 
     // RENDER MESSAGE
 
@@ -151,10 +151,6 @@ async function controlAddRecipe(newRecipe) {
     setTimeout(() => {
       addRecipeView.toggleWindow();
     }, TIMEOUT_CLOSE_WINDOW * 1000);
-
-    // UPDATE BOOKMARK
-
-    console.log(model.state.recipe);
   } catch (error) {
     addRecipeView.renderError(error);
     console.error(error);
@@ -194,7 +190,6 @@ function controlRenderCalenderOnLoad() {
   model.deletePrevDaysFromWeeklyCalendar();
   // store into local storage
   model.storeWeeklyCalendar();
-  // model.clearWeeklyCalendar();
   // render data on website
   weeklyCalendarView.render(model.state.weeklyCalendar);
 }
@@ -214,5 +209,7 @@ function init() {
   shoppingListView.addHandlerUpdateShoppingList(controlUpdateShoppingList);
   weeklyCalendarView.addHandlerRender(controlRenderCalenderOnLoad);
   recipeView.addHandlerGetCalendarValue(controlCalender);
+  // Array in state which contain current day and future week days used in dropdown menu of calendar
+  model.setWeekdaysLeft();
 }
 init();

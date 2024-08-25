@@ -10,14 +10,14 @@ class RecipeView extends View {
     this._toggleCalendarDropDownMenu();
   }
 
-  _generateMarkup(recipe) {
+  _generateMarkup(data) {
     return `<figure class="recipe_figure">
           <img
-            src="${recipe.image}"
-            alt="${recipe.title}"
+            src="${data.recipe.image}"
+            alt="${data.recipe.title}"
           />
           <h1 class="recipe__title">
-            <span>${recipe.title}</span>
+            <span>${data.recipe.title}</span>
           </h1>
         </figure>
         <div class="recipe__details">
@@ -26,7 +26,7 @@ class RecipeView extends View {
               <use href="${icons}#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">${
-              recipe.cookingTime
+              data.recipe.cookingTime
             }</span>
             <span class="recipe__info-text">minutes</span>
           </div>
@@ -54,7 +54,7 @@ class RecipeView extends View {
               />
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes"
-              >${Math.floor(recipe.totalCalories)}</span
+              >${Math.floor(data.recipe.totalCalories)}</span
             >
             <span class="recipe__info-text">calories</span>
           </div>
@@ -63,19 +63,19 @@ class RecipeView extends View {
               <use href="${icons}#icon-users"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--people">${
-              recipe.servings
+              data.recipe.servings
             }</span>
             <span class="recipe__info-text">servings</span>
             <div class="recipe__info-buttons">
               <button class="btn btn--update-servings" data-update-to="${
-                this._data.servings - 1
+                this._data.recipe.servings - 1
               }">
                 <svg class="icon">
                   <use href="${icons}#icon-minus-circle"></use>
                 </svg>
               </button>
               <button class="btn btn--update-servings" data-update-to="${
-                this._data.servings + 1
+                this._data.recipe.servings + 1
               }">
                 <svg class="icon">
                   <use href="${icons}#icon-plus-circle"></use>
@@ -83,7 +83,9 @@ class RecipeView extends View {
               </button>
             </div>
           </div>
-          <div class="recipe__user-generated ${this._data.key ? "" : "hidden"}">
+          <div class="recipe__user-generated ${
+            this._data.recipe.key ? "" : "hidden"
+          }">
             <svg class="icon">
               <use href="${icons}#icon-user"></use>
             </svg>
@@ -91,7 +93,7 @@ class RecipeView extends View {
           <button class="btn btn--bookmark">
             <svg class="icon">
               <use href="${icons}#icon-bookmark${
-      this._data.bookmarked ? "-fill" : ""
+      this._data.recipe.bookmarked ? "-fill" : ""
     }"></use>
             </svg>
           </button>
@@ -107,20 +109,18 @@ class RecipeView extends View {
               ></path>
             </svg>
             <div class="btn--calendar_drop_down-menu hidden">
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-              <option value="Sunday">Sunday</option>
+            ${this._data.weekdaysLeft
+              .map((el) => `<option value="${el}">${el}</option>`)
+              .join("")}
             </div>
           </button>
         </div>
         <div class="recipe__ingredients">
           <h2 class="heading--2">RECIPE INGREDIENTS</h2>
           <ul class="recipe__ingredients-list">
-          ${recipe.ingredients.map(this._generateMarkupIngredients).join("")}
+          ${data.recipe.ingredients
+            .map(this._generateMarkupIngredients)
+            .join("")}
           </ul>
         </div>
         <div class="recipe__direction">
@@ -132,7 +132,7 @@ class RecipeView extends View {
           <button class="btn btn--direction btn--shopping-cart">
             ADD INGREDIENTS TO SHOPPING LIST
           </button>
-          <a href="${recipe.sourceUrl}" class="btn btn--direction">
+          <a href="${data.recipe.sourceUrl}" class="btn btn--direction">
             <span>Direction</span>
             <svg class="icon">
               <use href="${icons}#icon-arrow-right"></use>
@@ -196,7 +196,7 @@ class RecipeView extends View {
     this._parentEl.addEventListener("click", (e) => {
       const node = e.target.closest(".btn--calendar_drop_down-menu option");
       if (!node) return;
-      const arr = [node.value, this._data.title, this._data.id];
+      const arr = [node.value, this._data.recipe.title, this._data.recipe.id];
       handler(arr);
     });
   }
