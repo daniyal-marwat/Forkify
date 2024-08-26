@@ -56,6 +56,7 @@ async function controlMainPreview() {
     // render data from state
     mainPreview.render(model.state);
   } catch (error) {
+    mainPreview.renderError(error.message);
     console.error(error);
   }
 }
