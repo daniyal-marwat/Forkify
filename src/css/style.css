@@ -528,8 +528,8 @@ nav img {
   gap: 2rem;
 }
 .main__preview_container-item {
-  height: 28rem;
-  width: 28rem;
+  height: 33rem;
+  width: 33rem;
   cursor: pointer;
   transition: transform 0.3s;
 }
