@@ -43,7 +43,7 @@ async function controlRecipe() {
   } catch (err) {
     // RENDERIN ERROR
 
-    recipeView.renderError();
+    recipeView.renderError(err.message);
     console.error(err);
   }
 }
