@@ -1,5 +1,11 @@
 import { async } from "regenerator-runtime";
-import { API_URL, RES_PER_PAGE, KEY, SPOONACULAR_API_KEY } from "./config.js";
+import {
+  API_URL,
+  RES_PER_PAGE,
+  KEY,
+  SPOONACULAR_API_KEY,
+  NUMBER_OF_PREVIEW_ELEMENTS_IN_MAIN,
+} from "./config.js";
 // import { getJSON, sendJSON } from "./helper.js";
 import { AJAX } from "./helper.js";
 
@@ -302,6 +308,169 @@ export function setWeekdaysLeft() {
     return weekdayOrder[a] - weekdayOrder[b];
   });
   state.weekdaysLeft.push(...leftDays);
+}
+export async function getRandomRecipes() {
+  try {
+    const randomfoodItems = [
+      "carrot",
+      "broccoli",
+      "asparagus",
+      "cauliflower",
+      "corn",
+      "cucumber",
+      "green pepper",
+      "lettuce",
+      "mushrooms",
+      "onion",
+      "potato",
+      "pumpkin",
+      "red pepper",
+      "tomato",
+      "beetroot",
+      "brussel sprouts",
+      "peas",
+      "zucchini",
+      "radish",
+      "sweet potato",
+      "artichoke",
+      "leek",
+      "cabbage",
+      "celery",
+      "chili",
+      "garlic",
+      "basil",
+      "coriander",
+      "parsley",
+      "dill",
+      "rosemary",
+      "oregano",
+      "cinnamon",
+      "saffron",
+      "green bean",
+      "bean",
+      "chickpea",
+      "lentil",
+      "apple",
+      "apricot",
+      "avocado",
+      "banana",
+      "blackberry",
+      "blackcurrant",
+      "blueberry",
+      "boysenberry",
+      "cherry",
+      "coconut",
+      "fig",
+      "grape",
+      "grapefruit",
+      "kiwifruit",
+      "lemon",
+      "lime",
+      "lychee",
+      "mandarin",
+      "mango",
+      "melon",
+      "nectarine",
+      "orange",
+      "papaya",
+      "passion fruit",
+      "peach",
+      "pear",
+      "pineapple",
+      "plum",
+      "pomegranate",
+      "quince",
+      "raspberry",
+      "strawberry",
+      "watermelon",
+      "salad",
+      "pizza",
+      "pasta",
+      "popcorn",
+      "lobster",
+      "steak",
+      "bbq",
+      "pudding",
+      "hamburger",
+      "pie",
+      "cake",
+      "sausage",
+      "tacos",
+      "kebab",
+      "poutine",
+      "seafood",
+      "chips",
+      "fries",
+      "masala",
+      "paella",
+      "som tam",
+      "chicken",
+      "toast",
+      "marzipan",
+      "tofu",
+      "ketchup",
+      "hummus",
+      "chili",
+      "maple syrup",
+      "parma ham",
+      "fajitas",
+      "champ",
+      "lasagna",
+      "poke",
+      "chocolate",
+      "croissant",
+      "arepas",
+      "bunny chow",
+      "pierogi",
+      "donuts",
+      "rendang",
+      "sushi",
+      "ice cream",
+      "duck",
+      "curry",
+      "beef",
+      "goat",
+      "lamb",
+      "turkey",
+      "pork",
+      "fish",
+      "crab",
+      "bacon",
+      "ham",
+      "pepperoni",
+      "salami",
+      "ribs",
+    ];
+    function returnsRandomRecipesFromArray(arrayOfRecipes) {
+      const randomRecipes = [];
+      const copyRecipes = [...arrayOfRecipes];
+      for (let i = 0; i < NUMBER_OF_PREVIEW_ELEMENTS_IN_MAIN; i++) {
+        const randomIndex = Math.floor(Math.random() * copyRecipes.length);
+        randomRecipes.push(copyRecipes.splice(randomIndex, 1)[0]);
+      }
+      return randomRecipes;
+    }
+    const req = await AJAX(
+      `https://forkify-api.herokuapp.com/api/v2/recipes?search=${
+        randomfoodItems[[Math.floor(Math.random() * randomfoodItems.length)]]
+      }`
+    );
+    const { recipes } = req.data;
+    if (recipes.length > NUMBER_OF_PREVIEW_ELEMENTS_IN_MAIN) {
+      state.randomRecipes = returnsRandomRecipesFromArray(recipes);
+    } else {
+      const req2 = await AJAX(
+        `https://forkify-api.herokuapp.com/api/v2/recipes?search=${
+          randomfoodItems[[Math.floor(Math.random() * randomfoodItems.length)]]
+        }`
+      );
+      const recipes2 = req2.data.recipes;
+      const combineRecipes = recipes.concat(recipes2);
+      state.randomRecipes = returnsRandomRecipesFromArray(combineRecipes);
+    }
+  } catch (error) {
+    throw error;
+  }
 }
 function init() {
   const bookmarkStorage = localStorage.getItem("bookmarks");

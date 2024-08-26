@@ -8,6 +8,7 @@ import bookmarkView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
 import shoppingListView from "./views/shoppingListView.js";
 import weeklyCalendarView from "./views/weeklyCalendarView.js";
+import mainPreview from "./views/mainPreview.js";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { async } from "regenerator-runtime";
@@ -44,6 +45,18 @@ async function controlRecipe() {
 
     recipeView.renderError();
     console.error(err);
+  }
+}
+async function controlMainPreview() {
+  try {
+    // render spinner
+    mainPreview.renderSpinner();
+    //store array of random recipes in state
+    await model.getRandomRecipes();
+    // render data from state
+    mainPreview.render(model.state);
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -211,5 +224,6 @@ function init() {
   recipeView.addHandlerGetCalendarValue(controlCalender);
   // Array in state which contain current day and future week days used in dropdown menu of calendar
   model.setWeekdaysLeft();
+  controlMainPreview();
 }
 init();
