@@ -18,17 +18,18 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 .container {
+  /* min-height: 131.2rem; */
   min-height: 90rem;
   display: grid;
   grid-template-rows: 100px 1fr 50px;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 44.4rem 1fr;
   grid-template-areas:
     "header header"
     "aside main"
     "footer main";
   background-color: #fff;
   /* height: 90%; */
-  width: 65%;
+  width: 70%;
   margin: 10rem auto 10rem auto;
   border-radius: 10px;
 }
@@ -36,19 +37,64 @@ body {
 /* *************************** */
 nav {
   display: grid;
-  grid-template-columns: 200px 1fr 150px 150px;
+  grid-template-columns: 1fr 0.5fr 4fr 1fr 1fr 1fr;
   align-items: center;
   justify-content: center;
   background-color: #f9f5f3;
   padding: 1rem 0;
-  border-radius: inherit;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
   grid-area: header;
   position: relative;
+}
+.nav-logo_a {
+  width: fit-content;
 }
 nav img {
   margin-left: 4rem;
   height: 4.6rem;
 }
+.nav-calender {
+  transform: translateX(-2rem);
+  padding: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #f2efee;
+  }
+}
+.icon_calender {
+  height: 4.6rem;
+  fill: #f38e82;
+  cursor: pointer;
+}
+.weekly-calender {
+  z-index: 5;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 100px;
+  width: 25%;
+  background: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s 0.2s;
+  box-shadow: 0 0.8rem 5rem 2rem rgba(97, 85, 81, 0.1);
+}
+.weekly-calender-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  list-style: none;
+  padding: 0.5rem;
+}
+.weekly-calender-list-item {
+  text-transform: uppercase;
+}
+.weekly-calender-list-item a {
+  padding-left: 1rem;
+  color: #f48982;
+  cursor: pointer;
+}
+
 /* stylign search bar */
 .search_container {
   /* justify-self: center;
@@ -107,7 +153,6 @@ nav img {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.4rem;
-  width: fit-content;
   margin-left: 1rem;
   height: 100%;
 }
@@ -115,7 +160,8 @@ nav img {
   position: relative;
 } */
 /* Bookmarks */
-.bookmarks {
+.bookmarks,
+.shopping-cart {
   padding: 1rem 0;
   position: absolute;
   overflow-x: hidden;
@@ -126,13 +172,51 @@ nav img {
   visibility: hidden;
   opacity: 0;
   right: 0;
-  bottom: -32.8rem;
+  top: 100px;
   transition: all 0.5s 0.2s;
   height: 35rem;
   overflow-y: scroll;
 }
-.bookmark__list {
+.bookmark__list,
+.shopping-cart-list {
   list-style: none;
+}
+/* Shopping List */
+.shopping-cart-list-item {
+  position: relative;
+  font-size: 1.3rem;
+  display: flex;
+  gap: 2rem;
+  padding: 0rem 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.shopping-cart-list-item_input-container {
+  display: flex;
+  border: 1px solid #eee;
+  width: 20%;
+  padding: 0.5rem;
+}
+.shopping-cart-list-item_input-container input {
+  border: none;
+  width: 100%;
+}
+.btn--remove-shopping-item {
+  color: #fff;
+  cursor: pointer;
+  background-color: #f38e82;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  padding: 0.5rem;
+  border-radius: 50%;
 }
 /* Effects */
 .search_container:focus-within {
@@ -147,6 +231,16 @@ nav img {
 }
 .bookmarks:hover,
 .nav_btn-container-bookmark:hover + .bookmarks {
+  visibility: visible;
+  opacity: 1;
+}
+.shopping-cart:hover,
+.nav_btn-container-shopping-cart:hover + .shopping-cart {
+  visibility: visible;
+  opacity: 1;
+}
+.weekly-calender:hover,
+.nav-calender:hover + .weekly-calender {
   visibility: visible;
   opacity: 1;
 }
@@ -345,14 +439,44 @@ nav img {
   width: 4rem;
   margin-left: auto;
 }
-.btn--bookmark {
+.btn--bookmark,
+.btn--calendar {
   height: 4rem;
   width: 4rem;
   background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
   transition: transform 0.2s;
   align-self: flex-end;
 }
-.btn--bookmark svg {
+.btn--shopping-cart {
+  width: 100%;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-bottom: 1rem;
+  font-weight: 500 !important;
+}
+.btn--calendar {
+  position: relative;
+}
+.btn--calendar_drop_down-menu {
+  z-index: 5;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  padding: 1rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0.8rem 5rem 2rem rgba(97, 85, 81, 0.1);
+  position: absolute;
+  top: 125%;
+  text-align: left;
+}
+.btn--calendar_drop_down-menu option {
+  transition: color 0.2s;
+}
+.btn--bookmark svg,
+.btn--calendar svg {
   fill: #fff;
 }
 
@@ -394,11 +518,68 @@ nav img {
   fill: #fff;
 }
 
+/* MAIN PREVIEW */
+.main__preview_container {
+  padding: 0 1rem 1rem 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+.main__preview_container-item {
+  height: 33rem;
+  width: 33rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.recipe_figure-main-preview {
+  /* width: 100%; */
+  position: relative;
+  height: 100%;
+}
+.recipe_figure-main-preview::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  position: absolute;
+  opacity: 0.6;
+}
+.recipe_figure-main-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recipe__title-main-preview {
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  left: 50%;
+  transform: translate(-40%, -40%) skewY(-6deg);
+}
+.recipe__title-main-preview span {
+  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  padding: 0.3rem 1rem;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  border-radius: 5px;
+}
+
 /* Effects */
 .btn--bookmark:hover {
   transform: scale(1.1);
 }
-
+.btn--shopping-cart:hover {
+  transform: scale(1.05);
+}
+.btn--calendar_drop_down-menu option:hover {
+  color: #f38e82;
+}
+.main__preview_container-item:hover {
+  transform: scale(1.05);
+}
 /* ***************************************************** */
 /* Dealing with footer */
 /* ***************************************************** */
@@ -521,6 +702,7 @@ nav img {
   height: 2.4rem;
   width: 2.4rem;
   fill: #f38e82;
+  color: #f38e82;
   transform: translateY(-1px);
 }
 .hidden {

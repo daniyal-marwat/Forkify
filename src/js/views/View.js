@@ -10,8 +10,11 @@ export default class View {
    * @todo  Finished Implementation
    */
   render(data) {
-    if (!data || (Array.isArray(data) && data.length === 0)) {
+    if (!data) {
       return this.renderError();
+    }
+    if (Array.isArray(data) && data.length === 0) {
+      return this.renderMessage();
     }
 
     this._data = data;

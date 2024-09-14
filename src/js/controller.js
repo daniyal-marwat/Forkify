@@ -6,7 +6,9 @@ import resultView from "./views/resultView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarkView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
-
+import shoppingListView from "./views/shoppingListView.js";
+import weeklyCalendarView from "./views/weeklyCalendarView.js";
+import mainPreview from "./views/mainPreview.js";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { async } from "regenerator-runtime";
@@ -31,14 +33,31 @@ async function controlRecipe() {
 
     await model.loadRecipe(id);
 
+    // GET CALORIES
+
+    await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
+
     //RENDERING DATA
 
-    recipeView.render(model.state.recipe);
+    recipeView.render(model.state);
   } catch (err) {
     // RENDERIN ERROR
 
-    recipeView.renderError();
+    recipeView.renderError(err.message);
     console.error(err);
+  }
+}
+async function controlMainPreview() {
+  try {
+    // render spinner
+    mainPreview.renderSpinner();
+    //store array of random recipes in state
+    await model.getRandomRecipes();
+    // render data from state
+    mainPreview.render(model.state);
+  } catch (error) {
+    mainPreview.renderError(error.message);
+    console.error(error);
   }
 }
 
@@ -56,6 +75,10 @@ async function controlSearchResults() {
     // LOADING SEARCH RESULTS
 
     await model.loadSearchResults(query);
+
+    // SORT THE RESULT BY COOKING TIME
+
+    // await model.sortResult();
 
     // RENDERING RESULTS
 
@@ -79,14 +102,18 @@ function controlPagination(gotoPage) {
   paginationView.render(model.state.search);
 }
 
-function controlUpdateServings(newServings) {
+async function controlUpdateServings(newServings) {
   //UPDATE SERVINGS
 
   model.updateServings(newServings);
 
+  // UPDATE CALOREIS
+
+  await model.getCaloriesOfIngredients(model.state.recipe.ingredients);
+
   //RENDER NEW SERVINGS
 
-  recipeView.update(model.state.recipe);
+  recipeView.update(model.state);
 }
 
 function controlAddBookmarks() {
@@ -97,7 +124,7 @@ function controlAddBookmarks() {
   else model.removeBookmark(model.state.recipe.id);
 
   // UPDATE THE BOOKMARK ICON
-  recipeView.update(model.state.recipe);
+  recipeView.update(model.state);
 
   // RENDER THE RESULTS IN BOOKMARK TAB
   bookmarkView.render(model.state.bookmarks);
@@ -119,7 +146,7 @@ async function controlAddRecipe(newRecipe) {
 
     // RENDER NEW RECIPE
 
-    recipeView.render(model.state.recipe);
+    recipeView.render(model.state);
 
     // RENDER MESSAGE
 
@@ -138,16 +165,48 @@ async function controlAddRecipe(newRecipe) {
     setTimeout(() => {
       addRecipeView.toggleWindow();
     }, TIMEOUT_CLOSE_WINDOW * 1000);
-
-    // UPDATE BOOKMARK
-
-    console.log(model.state.recipe);
   } catch (error) {
     addRecipeView.renderError(error);
     console.error(error);
   }
 }
+function controlAddShoppingList() {
+  // ADD INGREDIENTS OF RECIPE TO SHOPPING LIST IN MODEL.STATE
+  model.addIngredientsToShoppingList();
+  shoppingListView.render(model.state.shoppingList);
+}
+function controlRemoveShoppingListIngredient(index) {
+  model.removeIngredientsFromShoppingList(index);
+  shoppingListView.render(model.state.shoppingList);
+}
 
+function controlShoppingList() {
+  shoppingListView.render(model.state.shoppingList);
+}
+function controlUpdateShoppingList(index, changedValue) {
+  model.updateShoppingList(index, changedValue);
+}
+
+function controlCalender(calendarData) {
+  // save the data in state
+  model.saveWeeklyCalendar(calendarData);
+  // sort calendar
+  model.sortWeeklyCalendar();
+  // delete prev days from weekly calendar
+  model.deletePrevDaysFromWeeklyCalendar();
+  // store into local storage
+  model.storeWeeklyCalendar();
+  // render data on website
+  weeklyCalendarView.render(model.state.weeklyCalendar);
+}
+function controlRenderCalenderOnLoad() {
+  // delete prev days from weekly calendar
+  model.deletePrevDaysFromWeeklyCalendar();
+  // store into local storage
+  model.storeWeeklyCalendar();
+  // render data on website
+  weeklyCalendarView.render(model.state.weeklyCalendar);
+}
 function init() {
   bookmarkView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
@@ -156,6 +215,16 @@ function init() {
   searchView.addHandlerResults(controlSearchResults);
   paginationView.addHandlerPagination(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  console.log("Hello application")
+  recipeView.addHandlerShoppingList(controlAddShoppingList);
+  shoppingListView.addHandlerShoppingList(controlShoppingList);
+  shoppingListView.addHandlerRemoveIngredient(
+    controlRemoveShoppingListIngredient
+  );
+  shoppingListView.addHandlerUpdateShoppingList(controlUpdateShoppingList);
+  weeklyCalendarView.addHandlerRender(controlRenderCalenderOnLoad);
+  recipeView.addHandlerGetCalendarValue(controlCalender);
+  // Array in state which contain current day and future week days used in dropdown menu of calendar
+  model.setWeekdaysLeft();
+  controlMainPreview();
 }
 init();
